@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--User 配置文件-->
+<!--namespace = 绑定一个对应的mapper / dao 接口
+    实现接口
+-->
+
+<mapper namespace="com.hospital.mapper.PatientMapper">
+    <resultMap id="reminderMap" type="Reminder">
+        <id property="reminderId" column="reminderId"/>
+        <result property="content" column="content"/>
+        <result property="priority" column="priority"/>
+        <result property="state" column="state"/>
+        <result property="patientId" column="patientId"/>
+        <result property="deadline" column="deadline"/>
+        <result property="doctorFirstName" column="firstName"/>
+        <result property="doctorLastName" column="lastName"/>
+        <result property="doctorEmail" column="email"/>
+        <result property="patientFirstName" column="pfname"/>
+        <result property="patientLastName" column="plname"/>
+        <result property="patientEmail" column="pemail"/>
+    </resultMap>
+    <select id="getReminderList" resultMap="reminderMap" parameterType="Patient">
+        select r.*,d.*, p.firstName as pfname, p.lastName as plname, p.email as pemail  from Reminders as r, Patient as p, Doctor as d
+        where r.patientId = #{patientId} and d.doctorId = r.doctorId and p.patientId = r.patientId and r.state = 0;
+    </select>
+
+    <select id="loginPatient" resultType="Patient">
+        select * from Patient where email = #{email} and password = #{password};
+    </select>
+</mapper>
