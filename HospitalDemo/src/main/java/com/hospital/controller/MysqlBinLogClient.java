@@ -75,7 +75,7 @@ public class MysqlBinLogClient implements ApplicationRunner {
                 System.out.println(tableMapEventData.getTable());
             }
             // main method
-            if(data instanceof WriteRowsEventData && Integer.parseInt(Arrays.stream(((WriteRowsEventData) data).getRows().get(0)).toArray()[1].toString()) == PatientController.pt.getPatientId()){
+            if(data instanceof WriteRowsEventData && PatientController.pt != null  && Integer.parseInt(Arrays.stream(((WriteRowsEventData) data).getRows().get(0)).toArray()[1].toString()) == PatientController.pt.getPatientId()){
                 getValidReminder();
             }
             //表数据发生修改时触发

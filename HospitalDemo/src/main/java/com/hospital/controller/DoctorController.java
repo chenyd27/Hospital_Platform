@@ -5,20 +5,30 @@ import com.hospital.pojo.Doctor;
 import com.hospital.pojo.Patient;
 import com.hospital.pojo.Reminder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class DoctorController {
     @Autowired
     DoctorMapper doctorMapper;
 
+    @RequestMapping("/doctor-login-origin")
+    public Map<String,Object> loginPage(@RequestBody Map<String,String> map){
+        Doctor doctor1 = doctorMapper.loginDoctor(map.get("email"),map.get("password"));
+        boolean flag = false;
+        if(doctor1 != null) flag = true;
+        Map<String,Object> objectMap = new HashMap<>();
+        objectMap.put("doctor",doctor1);
+        objectMap.put("flag",flag);
+        return objectMap;
+    }
+
     @RequestMapping("/doctor-login")
-    public Map<String, Object> login(){
-        Doctor doctor = doctorMapper.loginDoctor("yic192@pitt.edu","123");
+    public Map<String, Object> login(@RequestBody Map<String,String> resmap){
+        Doctor doctor = doctorMapper.loginDoctor(resmap.get("email"),resmap.get("password"));
         boolean flag = false;
         if(doctor != null){
             flag = true;
@@ -26,20 +36,20 @@ public class DoctorController {
             doctor.setReminderList(doctorMapper.getValidReminderList(doctor));
         }
         Map<String, Object> map = new HashMap<>();
-        map.put(doctor.getEmail(),doctor);
+        map.put("doctor",doctor);
         map.put("flag",flag);
         return map;
     }
 
     @RequestMapping("/doctor-info")
-    public Map<String, Object> getInfo(){
-        Doctor doctor = doctorMapper.getDoctorInfo("yic192@pitt.edu");
+    public Map<String, Object> getInfo(@RequestBody Map<String,String> resmap){
+        Doctor doctor = doctorMapper.getDoctorInfo(resmap.get("email"));
         Map<String, Object> map = new HashMap<>();
         boolean flag = false;
         if(doctor != null){
             flag = true;
             doctor.setPatientList(doctorMapper.getPatientList(doctor));
-            map.put(doctor.getEmail(), doctor);
+            map.put("doctor", doctor);
         }
         map.put("flag",flag);
         return map;
