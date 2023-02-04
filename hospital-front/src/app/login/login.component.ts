@@ -1,7 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router,NavigationExtras } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { AES, enc } from 'crypto-js';
 import { LoginGuard } from '../userinfo.service';
 
 
@@ -43,11 +42,6 @@ export class LoginComponent implements OnInit {
   constructor(router : Router, http : HttpClient, private loginInfo : LoginGuard) { 
     this.router = router;
     this.http = http;
-  }
-  secret = 'secret_key';
-  encode(str: string): string{
-    const encoded = AES.encrypt(str, this.secret).toString();
-    return encoded;
   }
 
   ngOnInit(): void {

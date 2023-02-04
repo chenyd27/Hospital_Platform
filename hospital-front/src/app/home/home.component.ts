@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import { AES, enc } from 'crypto-js';
 import { HttpClient } from '@angular/common/http';
 import { LoginGuard } from '../userinfo.service';
 
