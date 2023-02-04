@@ -1,0 +1,21 @@
+<p>allreminder works!</p>
+<div class="reminder-list-box">
+    <table class="reminder-table" border="1">
+        <tr class="title">
+            <th>Reminder-Content</th>
+            <th>Patient-Name</th>
+            <th>Priority</th>
+            <th>Starting-Date</th>
+            <th>Deadline</th>
+        </tr>
+        <tr *ngFor="let item of reminderList;">
+            <td class="content">{{item.content}}</td>
+            <td class="name">{{item.patientFirstName}} {{item.patientLastName}}</td>
+            <td class="priority-low" *ngIf="item.priority == 1">{{item.priority | priorityChange}}</td>
+            <td class="priority-middle" *ngIf="item.priority == 2">{{item.priority | priorityChange}}</td>
+            <td class="priority-high" *ngIf="item.priority == 3">{{item.priority | priorityChange}}</td>
+            <td class="date">{{item.date | dateChange}}</td>
+            <td class="deadline">{{item.deadline}}</td>
+        </tr>
+    </table>
+</div>

@@ -1,0 +1,26 @@
+<p>addreminder works!</p>
+<div class="content">
+    <div class="patient_select">
+        <div>Please select the patient</div>
+        <select [(ngModel)]="selectPatient" (ngModelChange)="changePatient()">
+            <option  *ngFor="let item of this.doctor.patientList; let i = index;">{{item.patientId}} - {{item.firstName}} {{item.lastName}} - {{item.email}}</option>
+        </select>
+    </div>
+    <div class="content-input">
+        <textarea rows="8" cols="50" placeholder="Please input the content you want to remind." [(ngModel)]="reminderContent"></textarea>
+    </div>
+    <div class="duration-time">
+        <div class="duration-box1">Duration Time : </div>
+        <input placeholder="duration from now" class="duration-input" [(ngModel)]="duration" />
+        <div class="duration-hour">hours</div>
+    </div>
+    <div class="priority">
+        <div>Please select the <strong>Priority</strong></div>
+        <select [(ngModel)]="prioritySelector">
+            <option  *ngFor="let item of this.priorityLevel; let i = index;">{{item}}</option>
+        </select>
+    </div>
+    <div class="submit-button">
+        <button class="submit" (click)="addReminder()">Submit</button>
+    </div>
+</div>

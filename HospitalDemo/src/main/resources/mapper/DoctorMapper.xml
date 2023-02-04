@@ -44,6 +44,7 @@
 
     <resultMap id="doctorMap" type="Doctor">
         <id column="email" property="email"/>
+        <result column="password" property="password"/>
         <result column="firstName" property="firstName"/>
         <result column="lastName" property="lastName"/>
         <result column="doctorId" property="doctorId"/>
@@ -53,6 +54,7 @@
             <result property="priority" column="priority"/>
             <result property="state" column="state"/>
             <result property="patientId" column="patientId"/>
+            <result property="date" column="date"/>
             <result property="deadline" column="deadline"/>
             <result property="doctorFirstName" column="firstName"/>
             <result property="doctorLastName" column="lastName"/>
@@ -63,8 +65,8 @@
         </collection>
     </resultMap>
     <select id="getDoctorInfo" resultMap="doctorMap">
-        select d.*, r.*, p.firstName as pfname, p.lastName as plname, p.email as pemail from Doctor as d, Reminders as r, Patient as p
-        where d.email = #{email} and d.doctorId = r.doctorId and p.patientId = r.patientId;
+        select d.*, r.*, p.firstName as pfname, p.lastName as plname, p.email as pemail, p.highpriority as phigh,p.middlepriority as pmiddle,p.lowpriority as plow from Doctor as d, Reminders as r, Patient as p
+        where d.email = #{email} and d.doctorId = r.doctorId and p.patientId = r.patientId and r.state = 0;
     </select>
 
     <insert id="addPatient" parameterType="map">
@@ -75,8 +77,16 @@
         delete from Relationship where patientId = #{patientId} and doctorId = #{doctorId};
     </delete>
 
+    <update id="updatePatient" parameterType="Patient">
+        update Patient set highpriority = #{highPriority}, middlepriority = #{middlePriority}, lowpriority = #{lowPriority}
+        where patientId = #{patientId};
+    </update>
+
     <select id="getSinglePatient" resultType="Patient">
         select * from Patient where email = #{email};
+    </select>
+    <select id="getSinglePatientById" resultType="Patient">
+        select * from Patient where patientId = #{patientId};
     </select>
 
     <insert id="addReminder" parameterType="Reminder">
@@ -87,6 +97,7 @@
     <select id="getSingleReminder" resultType="Reminder">
         select * from Reminders where reminderId = #{reminderId};
     </select>
+
 
     <update id="setReminderFinished" parameterType="Reminder">
         update Reminders set state = 1 where reminderId = #{reminderId};
@@ -99,4 +110,18 @@
     <update id="updateReminder" parameterType="Reminder">
         update Reminders set content = #{content} where reminderId = #{reminderId};
     </update>
+    
+    <select id="countHighPriority" parameterType="Patient" resultType="int">
+        SELECT COUNT(reminderId) FROM Reminders WHERE priority = 3 and patientId = #{patientId} and state = 0;
+    </select>
+    <select id="countMiddlePriority" parameterType="Patient" resultType="int">
+        SELECT COUNT(reminderId) FROM Reminders WHERE priority = 2 and patientId = #{patientId} and state = 0;
+    </select>
+    <select id="countLowPriority" parameterType="Patient" resultType="int">
+        SELECT COUNT(reminderId) FROM Reminders WHERE priority = 1 and patientId = #{patientId} and state = 0;
+    </select>
+
+    <select id="getReminderOutdatedBySinglePatient" parameterType="int" resultType="Reminder">
+        select * from Reminders as r where r.patientId = #{patientId} and r.state = 2 and (r.date between (NOW() - interval 7 day) and NOW()) ;
+    </select>
 </mapper>

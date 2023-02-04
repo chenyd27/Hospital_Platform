@@ -3,6 +3,7 @@ import { Router, RouterModule } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { AES, enc } from 'crypto-js';
 import { HttpClient } from '@angular/common/http';
+import { LoginGuard } from '../userinfo.service';
 
 
 @Component({
@@ -19,14 +20,18 @@ export class HomeComponent implements OnInit {
   http:HttpClient;
   url : string = "http://localhost:9000/";
 
-  constructor(router : Router,route: ActivatedRoute, http:HttpClient) {
+  constructor(router : Router,route: ActivatedRoute, http:HttpClient,private loginInfo : LoginGuard) {
     this.router = router;
     this.route = route;
     this.http = http;
  }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((data:any)=>{
+    if(Boolean(localStorage.getItem('flag')) == false || localStorage.getItem('flag') == null){
+      this.router.navigateByUrl("/login");
+    }
+    /**
+     * this.route.queryParams.subscribe((data:any)=>{
       if(data.email == null){
         this.router.navigateByUrl("login");
       }else{
@@ -38,6 +43,7 @@ export class HomeComponent implements OnInit {
         })
       }
     })
+     */
   }
   }
 

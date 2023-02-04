@@ -1,0 +1,24 @@
+.reminder-list-box {
+  display: flex;
+  justify-content: center;
+}
+.reminder-list-box .reminder-table {
+  width: 80%;
+  text-align: center;
+}
+.reminder-list-box .reminder-table .title {
+  background-color: cadetblue;
+  color: white;
+}
+.reminder-list-box .reminder-table .content {
+  width: 50%;
+}
+.reminder-list-box .reminder-table .priority-low {
+  color: green;
+}
+.reminder-list-box .reminder-table .priority-middle {
+  color: orange;
+}
+.reminder-list-box .reminder-table .priority-high {
+  color: red;
+}

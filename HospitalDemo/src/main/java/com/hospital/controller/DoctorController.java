@@ -4,6 +4,7 @@ import com.hospital.mapper.DoctorMapper;
 import com.hospital.pojo.Doctor;
 import com.hospital.pojo.Patient;
 import com.hospital.pojo.Reminder;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,13 +43,27 @@ public class DoctorController {
     }
 
     @RequestMapping("/doctor-info")
-    public Map<String, Object> getInfo(@RequestBody Map<String,String> resmap){
-        Doctor doctor = doctorMapper.getDoctorInfo(resmap.get("email"));
+    public Map<String, Object> getInfo(@RequestBody Map<String,Object> resmap){
+        Doctor doctor = doctorMapper.getDoctorInfo((String) resmap.get("email"));
         Map<String, Object> map = new HashMap<>();
         boolean flag = false;
         if(doctor != null){
             flag = true;
-            doctor.setPatientList(doctorMapper.getPatientList(doctor));
+            List<Patient> patients = doctorMapper.getPatientList(doctor);
+            patients.sort((a,b)->{
+                if(a.getHighPriority() != b.getHighPriority()) return b.getHighPriority() - a.getHighPriority();
+                else if(a.getMiddlePriority() != b.getMiddlePriority()) return b.getMiddlePriority() - a.getMiddlePriority();
+                else return b.getLowPriority() - a.getLowPriority();
+            });
+            /**
+             for(Patient patient : patients){
+             patient.setHighPriority(doctorMapper.countHighPriority(patient));
+             patient.setLowPriority(doctorMapper.countLowPriority(patient));
+             patient.setMiddlePriority(doctorMapper.countMiddlePriority(patient));
+             doctorMapper.updatePatient(patient);
+             }
+             */
+            doctor.setPatientList(patients);
             map.put("doctor", doctor);
         }
         map.put("flag",flag);
@@ -96,16 +111,29 @@ public class DoctorController {
     }
 
     @RequestMapping("/doctor-addreminder")
-    public String addReminder(){
+    public Map<String,Object> addReminder(@RequestBody Map<String,Object> map){
+        System.out.println(map);
         Reminder reminder = new Reminder();
-        reminder.setContent("3333333");
-        reminder.setDeadline(3);
-        reminder.setDoctorId(1);
-        reminder.setPatientId(1);
+        reminder.setContent((String) map.get("reminderContent"));
+        reminder.setDeadline(Integer.parseInt((String) map.get("duration")));
+        reminder.setDoctorId((int)map.get("doctorId"));
+        reminder.setPatientId(Integer.parseInt((String) map.get("patientId")));
         reminder.setDate(Calendar.getInstance().getTime());
-        reminder.setPriority(3);
+        reminder.setPriority((int)map.get("priority"));
+        Patient patient = doctorMapper.getSinglePatientById(reminder.getPatientId());
+        if(reminder.getPriority() == 1){
+            patient.setLowPriority(patient.getLowPriority() + 1);
+        }else if(reminder.getPriority() == 2){
+            patient.setMiddlePriority(patient.getMiddlePriority() + 1);
+        }else{
+            patient.setHighPriority(patient.getHighPriority() + 1);
+        }
+        doctorMapper.updatePatient(patient);
         int res = doctorMapper.addReminder(reminder);
-        return res > 0 ? "addreminder" : "error";
+        Map<String,Object> hashMap = new HashMap<>();
+        if(res > 0) hashMap.put("flag",true);
+        else hashMap.put("flag",false);
+        return hashMap;
     }
 
     @RequestMapping("/doctor-updateReminder")
@@ -117,10 +145,9 @@ public class DoctorController {
     }
 
     @RequestMapping("/doctor-outdated")
-    public String handleOudated(){
-        Doctor doctor = doctorMapper.getDoctorInfo("yic192@pitt.edu");
+    public Map<String, Object> handleOudated(@RequestBody Map<String,Object> resmap){
+        Doctor doctor = doctorMapper.getDoctorInfo((String) resmap.get("email"));
         List<Reminder> reminders = doctorMapper.getValidReminderList(doctor);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat();
         Date today = Calendar.getInstance().getTime();
         for(Reminder reminder : reminders){
             Date date = reminder.getDate();
@@ -128,12 +155,22 @@ public class DoctorController {
             c.setTime(date);
             c.add(Calendar.HOUR_OF_DAY,reminder.getDeadline());
             Date newdate = c.getTime();
-            System.out.println(newdate);
             if(newdate.getTime() < today.getTime()){
                 doctorMapper.setReminderOutdated(reminder);
+                Patient patient = doctorMapper.getSinglePatientById(reminder.getPatientId());
+                if(reminder.getPriority() == 1){
+                    patient.setLowPriority(patient.getLowPriority() - 1);
+                }else if(reminder.getPriority() == 2){
+                    patient.setMiddlePriority(patient.getMiddlePriority() - 1);
+                }else{
+                    patient.setHighPriority(patient.getHighPriority() - 1);
+                }
+                doctorMapper.updatePatient(patient);
             }
         }
-        return "outdated";
+        Map<String,Object> map = new HashMap<>();
+        map.put("outdated",true);
+        return map;
     }
 
     @RequestMapping("/doctor-finished")
@@ -142,4 +179,15 @@ public class DoctorController {
         int res = doctorMapper.setReminderFinished(reminder);
         return res > 0 ? "finished" : "error";
     }
+    @RequestMapping("/doctor-outdated-reminder")
+    public Map<String,Object> getOutdatedReminderByPatient(@RequestParam("patientId") String patientId){
+        List<Reminder> list = doctorMapper.getReminderOutdatedBySinglePatient(Integer.parseInt(patientId));
+        Map<String,Object> hashmap = new HashMap<>();
+        boolean flag = false;
+        if(list != null) flag = true;
+        hashmap.put("flag",flag);
+        hashmap.put("outdatedReminderList",list);
+        return hashmap;
+    }
+
 }

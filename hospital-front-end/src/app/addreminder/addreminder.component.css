@@ -1,0 +1,31 @@
+.content .patient_select {
+  display: flex;
+}
+.content .patient_select select {
+  margin-left: 20px;
+}
+.content .content-input {
+  margin-top: 20px;
+}
+.content .duration-time {
+  display: flex;
+  margin-top: 20px;
+}
+.content .duration-time .duration-box1 {
+  font-weight: bolder;
+  margin-right: 10px;
+}
+.content .duration-time .duration-input {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+.content .duration-time .duration-hour {
+  margin-left: 10px;
+}
+.priority {
+  margin-top: 20px;
+  display: flex;
+}
+.priority select {
+  margin-left: 20px;
+}

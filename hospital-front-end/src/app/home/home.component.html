@@ -1,8 +1,25 @@
 <body>
-    <div id="add-reminder">
-        <button>add reminder</button>
+    <div id="menu" class="menu">
+        <div class="menu-box">
+            <div class="menu-title">
+                <div id="add-reminder" class="box">
+                    <button routerLink="add-reminder">add reminder</button>
+                </div>
+                <div id="reminder-list" class="box">
+                    <button routerLink="">Reminder-list</button>
+                </div>
+                <div id="history-list" class="box">
+                    <button routerLink="history">History-list</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <div id="reminder-list"></div>
-    <div id="history-list"></div>
-    <div id="patient-list"></div>
+    <div id="content" class="content">
+        <div id="log-out">
+            <button routerLink="../login">log-out</button>
+        </div>
+        <router-outlet></router-outlet>
+    </div>
+
+
 </body>

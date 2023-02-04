@@ -1,0 +1,18 @@
+<p>patientlist works!</p>
+
+<div class="patient-list-box">
+    <table class="patient-table" border="1">
+        <tr class="title">
+            <th>Name</th>
+            <th>High Priority Reminder</th>
+            <th>Middle Priority Reminder</th>
+            <th>Low Priority Reminder</th>
+        </tr>
+        <tr *ngFor="let item of patients;">
+            <td>{{item.firstName}} {{item.lastName}}</td>
+            <td class="high">{{item.highPriority}}</td>
+            <td class="middle">{{item.middlePriority}}</td>
+            <td class="low">{{item.lowPriority}}</td>
+        </tr>
+    </table>
+</div>

@@ -1,0 +1,8 @@
+.selector {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 42%;
+}
+.selector .shift {
+  margin-right: 20px;
+}

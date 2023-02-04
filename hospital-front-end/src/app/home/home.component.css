@@ -1,0 +1,25 @@
+body {
+  display: flex;
+}
+.menu {
+  flex-basis: 10%;
+}
+.menu .menu-box {
+  background-color: cadetblue;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 10%;
+  height: 100%;
+}
+.menu .menu-box .menu-title {
+  text-align: center;
+}
+.menu .menu-box .menu-title .box {
+  margin-top: 20px;
+}
+.content {
+  flex-basis: 90%;
+}

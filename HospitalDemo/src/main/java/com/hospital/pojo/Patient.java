@@ -16,4 +16,7 @@ public class Patient {
     private String email;
     private String password;
     private List<Reminder> reminderList;
+    private int highPriority;
+    private int middlePriority;
+    private int lowPriority;
 }

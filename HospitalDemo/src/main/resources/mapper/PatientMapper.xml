@@ -30,4 +30,7 @@
     <select id="loginPatient" resultType="Patient">
         select * from Patient where email = #{email} and password = #{password};
     </select>
+    <select id="getPatientInfo" resultType="Patient">
+        select * from Patient where email = #{email};
+    </select>
 </mapper>

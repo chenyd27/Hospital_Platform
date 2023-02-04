@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router,NavigationExtras } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AES, enc } from 'crypto-js';
+import { LoginGuard } from '../userinfo.service';
 
 
 
@@ -25,15 +26,21 @@ export class LoginComponent implements OnInit {
   jump():void{
     this.http.post(this.url + "doctor-login-origin",this.doctor).subscribe((res:any)=>{
       if(res.flag == true){
-        let navigationExtras: NavigationExtras = {
+        this.loginInfo.setDoctor(res.doctor,res.flag);
+        this.router.navigate(['/home']);
+        localStorage.setItem('doctor',JSON.stringify(res.doctor));
+        localStorage.setItem('flag',res.flag);
+        /**
+         * let navigationExtras: NavigationExtras = {
           queryParams:{'email':res.doctor.email,'password':res.doctor.password}
         };
         this.router.navigate(['/home'],navigationExtras);
+         */
       }
     })
   }
 
-  constructor(router : Router, http : HttpClient) { 
+  constructor(router : Router, http : HttpClient, private loginInfo : LoginGuard) { 
     this.router = router;
     this.http = http;
   }
@@ -44,6 +51,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+      localStorage.setItem('doctor',"");
   }
 
 }

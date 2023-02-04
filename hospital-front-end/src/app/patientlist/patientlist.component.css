@@ -1,0 +1,24 @@
+.patient-list-box {
+  display: flex;
+  justify-content: center;
+}
+.patient-list-box .patient-table {
+  width: 70%;
+  text-align: center;
+}
+.patient-list-box .patient-table .title {
+  background-color: cadetblue;
+  color: white;
+}
+.patient-list-box .patient-table .high {
+  color: red;
+  font-weight: bolder;
+}
+.patient-list-box .patient-table .middle {
+  color: blue;
+  font-weight: bolder;
+}
+.patient-list-box .patient-table .low {
+  color: darkgreen;
+  font-weight: bolder;
+}
