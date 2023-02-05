@@ -1,8 +1,13 @@
 .selector {
   display: flex;
-  justify-content: flex-start;
-  margin-left: 42%;
+  justify-content: center;
 }
 .selector .shift {
   margin-right: 20px;
+  font-weight: bold;
+  color: #13348e;
+}
+.selector .hidden {
+  margin-right: 20px;
+  color: gray;
 }

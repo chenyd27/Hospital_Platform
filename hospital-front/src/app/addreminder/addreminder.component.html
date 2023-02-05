@@ -7,20 +7,57 @@
         </select>
     </div>
     <div class="content-input">
-        <textarea rows="8" cols="50" placeholder="Please input the content you want to remind." [(ngModel)]="reminderContent"></textarea>
+        <textarea rows="15" cols="100" placeholder="Please input the content you want to remind." [(ngModel)]="reminderContent"></textarea>
     </div>
     <div class="duration-time">
         <div class="duration-box1">Duration Time : </div>
         <input placeholder="duration from now" class="duration-input" [(ngModel)]="duration" />
-        <div class="duration-hour">hours</div>
+        <div class="duration-hour"><strong>hours</strong></div>
     </div>
     <div class="priority">
         <div>Please select the <strong>Priority</strong></div>
         <select [(ngModel)]="prioritySelector">
-            <option  *ngFor="let item of this.priorityLevel; let i = index;">{{item}}</option>
+            <option  *ngFor="let item of priorityLevel;">{{item}}</option>
         </select>
     </div>
     <div class="submit-button">
         <button class="submit" (click)="addReminder()">Submit</button>
+        <button class="clear" (click)="clearInfo()">Clear</button>
+    </div>
+</div>
+
+<div [ngClass]="{'show': this.errgroup.emptyId == false ,'warning' : this.errgroup.emptyId}">
+    <div class="warning-box">
+        <div class="warning-img">
+            <img src="../../assets/warning-fill.png" class="img01" />
+        </div>
+        <div class="warning-title">Please select a patient</div>
+        <div class="warning-button">
+            <button (click)="reset()">ok</button>
+        </div>
+    </div>
+</div>
+
+<div [ngClass]="{'show': this.errgroup.emptyContent == false,'warning' : this.errgroup.emptyContent}">
+    <div class="warning-box">
+        <div class="warning-img">
+            <img src="../../assets/warning-fill.png" class="img01" />
+        </div>
+        <div class="warning-title">Please input the content</div>
+        <div class="warning-button">
+            <button (click)="reset()">ok</button>
+        </div>
+    </div>
+</div>
+
+<div [ngClass]="{'show': this.errgroup.emptyDurationTime == false,'warning' : this.errgroup.emptyDurationTime}">
+    <div class="warning-box">
+        <div class="warning-img">
+            <img src="../../assets/warning-fill.png" class="img01" />
+        </div>
+        <div class="warning-title">Please input a correct time</div>
+        <div class="warning-button">
+            <button (click)="reset()">ok</button>
+        </div>
     </div>
 </div>

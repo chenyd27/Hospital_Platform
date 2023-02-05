@@ -18,6 +18,35 @@ export class HomeComponent implements OnInit {
   route : ActivatedRoute;
   http:HttpClient;
   url : string = "http://localhost:9000/";
+  addButton : boolean = false;
+  reminderButton : boolean = true;
+  historyButton : boolean = false;
+
+  changetoReminder():void{
+    this.reminderButton = true;
+    this.addButton = false;
+    this.historyButton = false;
+    localStorage.setItem('reminderButton','true');
+    localStorage.setItem('addButton','false');
+    localStorage.setItem('historyButton','false');
+  }
+
+  changetoAdd():void{
+    this.reminderButton = false;
+    this.addButton = true;
+    this.historyButton = false;
+    localStorage.setItem('reminderButton','false');
+    localStorage.setItem('addButton','true');
+    localStorage.setItem('historyButton','false');
+  }
+  changetoHistory():void{
+    this.reminderButton = false;
+    this.addButton = false;
+    this.historyButton = true;
+    localStorage.setItem('reminderButton','false');
+    localStorage.setItem('addButton','false');
+    localStorage.setItem('historyButton','true');
+  }
 
   constructor(router : Router,route: ActivatedRoute, http:HttpClient,private loginInfo : LoginGuard) {
     this.router = router;
@@ -28,6 +57,19 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     if(Boolean(localStorage.getItem('flag')) == false || localStorage.getItem('flag') == null){
       this.router.navigateByUrl("/login");
+    }
+    if(localStorage.getItem('historyButton') === "true"){
+      this.historyButton = true;
+      this.addButton = false;
+      this.reminderButton = false;
+    }else if(localStorage.getItem('addButton') === "true"){
+      this.historyButton = false;
+      this.addButton = true;
+      this.reminderButton = false;
+    } else{
+      this.historyButton = false;
+      this.addButton = false;
+      this.reminderButton = true;
     }
     /**
      * this.route.queryParams.subscribe((data:any)=>{

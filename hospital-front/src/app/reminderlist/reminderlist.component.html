@@ -1,6 +1,6 @@
 <p>reminderlist works!</p>
 <div class="selector">
-    <div class="shift" routerLink="">Patient-List</div>
-    <div class="shift" routerLink="allreminder">Reminder-List</div>
+    <div [ngClass]="{'shift' :index == 0, 'hidden' : index != 0}" routerLink="" (click)="changePatientList()">Patient-List</div>
+    <div [ngClass]="{'shift' :index == 1, 'hidden' : index != 1}" routerLink="allreminder" (click)="changeReminderList()">Reminder-List</div>
 </div>
 <router-outlet></router-outlet>

@@ -2,24 +2,38 @@ body {
   display: flex;
 }
 .menu {
-  flex-basis: 10%;
+  flex-basis: 15%;
 }
 .menu .menu-box {
-  background-color: cadetblue;
+  background-color: #13348e;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  width: 10%;
+  width: 15%;
   height: 100%;
 }
 .menu .menu-box .menu-title {
   text-align: center;
 }
 .menu .menu-box .menu-title .box {
-  margin-top: 20px;
+  background-color: #13348e;
+  color: #f2ba48;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.menu .menu-box .menu-title .active-box {
+  background-color: white;
+  color: #13348e;
+  font-weight: bold;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .content {
-  flex-basis: 90%;
+  flex-basis: 85%;
 }

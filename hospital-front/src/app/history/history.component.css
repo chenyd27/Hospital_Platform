@@ -1,0 +1,7 @@
+.select {
+  display: flex;
+}
+.select .select-box {
+  font-weight: bold;
+  margin-right: 20px;
+}

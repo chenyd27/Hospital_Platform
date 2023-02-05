@@ -10,6 +10,15 @@ import { LoginGuard } from '../userinfo.service';
 })
 export class ReminderlistComponent implements OnInit {
   doctor : any = {};
+  index : number = 0;
+
+  changePatientList():void{
+    this.index = 0;
+  }
+  changeReminderList():void{
+    this.index = 1;
+  }
+
   constructor(private route : ActivatedRoute, private router : Router, private http : HttpClient, private loginInfo: LoginGuard ) { }
 
   ngOnInit(): void {

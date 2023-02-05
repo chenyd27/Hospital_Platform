@@ -1,12 +1,12 @@
 <p>login works!</p>
-<div id="login">
-    <div id="usename">
+<div id="login" class="login-page">
+    <div id="usename" class="usename">
         <input placeholder="input your email" [(ngModel)]="doctor.email">
     </div>
-    <div id="password">
+    <div id="password" class="password">
         <input placeholder="input your password" type="password" [(ngModel)]="doctor.password">
     </div>
-    <div>
+    <div class="button-box">
         <button (click)="jump()">login</button>
     </div>
 </div>

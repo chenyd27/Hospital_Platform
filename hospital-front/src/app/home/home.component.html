@@ -2,14 +2,14 @@
     <div id="menu" class="menu">
         <div class="menu-box">
             <div class="menu-title">
-                <div id="add-reminder" class="box">
-                    <button routerLink="add-reminder">add reminder</button>
+                <div id="add-reminder" [ngClass]="{'active-box': this.addButton,'box' : this.addButton == false}" (click)="changetoAdd()" routerLink="add-reminder">
+                    <div>Add Reminder</div>
                 </div>
-                <div id="reminder-list" class="box">
-                    <button routerLink="">Reminder-list</button>
+                <div id="reminder-list" [ngClass]="{'active-box': this.reminderButton,'box' : this.reminderButton == false}" (click)="changetoReminder()" routerLink="">
+                    <div>Reminder-List</div>
                 </div>
-                <div id="history-list" class="box">
-                    <button routerLink="history">History-list</button>
+                <div id="history-list" [ngClass]="{'active-box': this.historyButton,'box' : this.historyButton == false}" (click)="changetoHistory()" routerLink="history">
+                    <div>History-List</div>
                 </div>
             </div>
         </div>

@@ -29,7 +29,6 @@ export class AllreminderComponent implements OnInit {
                 localStorage.setItem('doctor',JSON.stringify(res.doctor));
                 this.doctor = res.doctor;
                 this.reminderList = res.doctor.reminderList;
-                console.log(this.reminderList);
               }
             })
           }

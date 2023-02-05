@@ -1,9 +1,11 @@
 <p>history works!</p>
 <div class="select">
+    <div class="select-box">Select the patient</div>
     <select [(ngModel)]="selectId" (ngModelChange)="getReminderList()">
         <option *ngFor="let item of this.patients">{{item.patientId}} - {{item.firstName}} {{item.lastName}}</option>
     </select>
 </div>
-<div class="chart">
-    <canvas id="barChart"></canvas>
+<div style="display: block;">
+    <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
+    </canvas>
 </div>

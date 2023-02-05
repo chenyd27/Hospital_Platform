@@ -2,24 +2,38 @@ body{
     display: flex;
 }
 .menu{
-    flex-basis: 10%;
+    flex-basis: 15%;
     .menu-box{
-        background-color: cadetblue;
+        background-color: rgb(19, 52, 142);
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        width: 10%;
+        width: 15%;
         height: 100%;
         .menu-title{
             text-align: center;
             .box{
-                margin-top: 20px;
+                background-color: rgb(19, 52, 142);
+                color: rgb(242, 186, 72);
+                height: 50px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .active-box{
+                background-color: white;
+                color:rgb(19, 52, 142) ;
+                font-weight: bold;
+                height: 50px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
         }
     }
 }
 .content{
-    flex-basis: 90%;
+    flex-basis: 85%;
 }

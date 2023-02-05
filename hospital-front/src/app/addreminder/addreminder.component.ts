@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-addreminder',
   templateUrl: './addreminder.component.html',
@@ -15,7 +16,13 @@ export class AddreminderComponent implements OnInit {
   reminderContent:string = "";
   duration : string = "";
   priorityLevel = ["HIGH", "MIDDLE","LOW"];
-  prioritySelector : string = "";
+  prioritySelector : string = this.priorityLevel[2];
+
+  errgroup : any = {
+    emptyId : false,
+    emptyContent : false,
+    emptyDurationTime : false,
+  }
   reminder : any = {
     patientId : "" ,
     reminderContent:"",
@@ -28,25 +35,57 @@ export class AddreminderComponent implements OnInit {
   changePatient():void{
     this.patientId = this.selectPatient.split(" - ")[0];
   }
-
-  addReminder():void{
-    this.reminder.patientId = this.patientId;
-    this.reminder.reminderContent = this.reminderContent;
-    this.reminder.duration = this.duration;
-    this.reminder.doctorId = this.doctor.doctorId;
-    if(this.prioritySelector === "HIGH"){
-      this.reminder.priority = 3;
-    }else if(this.prioritySelector === "MIDDLE"){
-      this.reminder.priority = 2;
-    }else{
-      this.reminder.priority = 1;
-    }
-    this.http.post(this.url + 'doctor-addreminder',this.reminder).subscribe((res:any)=>{
-       if(res.flag == true){
-          this.router.navigateByUrl('');
-       }
-    })
+  isNumber(value: string): boolean {
+    return /^\d+$/.test(value);
   }
+
+  isEmpty(value: string): boolean {
+    return !value || value.trim().length === 0;
+  }
+  addReminder():void{
+    if(this.isEmpty(this.reminderContent)){
+      this.errgroup.emptyContent = true;
+    }else if(this.isEmpty(this.patientId)){
+      this.errgroup.emptyId = true;
+    }else if(this.duration === "0" || this.isEmpty(this.duration) || this.isNumber(this.duration) == false){
+      this.errgroup.emptyDurationTime = true;
+    }else{
+      this.reminder.patientId = this.patientId;
+      this.reminder.reminderContent = this.reminderContent;
+      this.reminder.duration = this.duration;
+      this.reminder.doctorId = this.doctor.doctorId;
+      if(this.prioritySelector === "HIGH"){
+        this.reminder.priority = 3;
+      }else if(this.prioritySelector === "MIDDLE"){
+        this.reminder.priority = 2;
+      }else{
+        this.reminder.priority = 1;
+      }
+      this.http.post(this.url + 'doctor-addreminder',this.reminder).subscribe((res:any)=>{
+        if(res.flag == true){
+            this.router.navigateByUrl('');
+        }
+      })
+    }
+  }
+
+  reset():void{
+    this.errgroup.emptyId = false;
+    this.errgroup.emptyContent = false;
+    this.errgroup.emptyDurationTime = false;
+  }
+
+  clearInfo() :void{
+    this.errgroup.emptyId = false;
+    this.errgroup.emptyContent = false;
+    this.errgroup.emptyDurationTime = false;
+    this.selectPatient = "";
+    this.reminderContent = "";
+    this.duration = "";
+    this.patientId = "";
+    this.prioritySelector = this.priorityLevel[2];
+  }
+
 
   ngOnInit(): void {
       let tmpdoctor = localStorage.getItem('doctor');

@@ -15,10 +15,8 @@ import { PatientlistComponent } from './patientlist/patientlist.component';
 import { AllreminderComponent } from './allreminder/allreminder.component';
 import { DatePipe } from './date.pipe';
 import { PriorityPipe } from './priority.pipe';
-
-
-
-
+import { ChartsModule } from 'ng2-charts';
+import { ErrorPipe } from './err.pipe';
 let routes = [
   {
     path:'login',
@@ -57,6 +55,7 @@ let routes = [
     AllreminderComponent,
     DatePipe,
     PriorityPipe,
+    ErrorPipe,
   ],
   imports: [
     BrowserModule,
@@ -64,6 +63,7 @@ let routes = [
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot(routes),
+    ChartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
