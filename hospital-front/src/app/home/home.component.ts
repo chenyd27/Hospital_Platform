@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, DoCheck, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -10,7 +10,7 @@ import { LoginGuard } from '../userinfo.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.less']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit,DoCheck {
 
   doctor:any = {};
   state : boolean = false;
@@ -52,6 +52,24 @@ export class HomeComponent implements OnInit {
     this.router = router;
     this.route = route;
     this.http = http;
+ }
+
+ ngDoCheck(): void {
+  //Called every time that the input properties of a component or a directive are checked. Use it to extend change detection by performing a custom check.
+  //Add 'implements DoCheck' to the class.
+  if(localStorage.getItem('historyButton') === "true"){
+    this.historyButton = true;
+    this.addButton = false;
+    this.reminderButton = false;
+  }else if(localStorage.getItem('addButton') === "true"){
+    this.historyButton = false;
+    this.addButton = true;
+    this.reminderButton = false;
+  } else{
+    this.historyButton = false;
+    this.addButton = false;
+    this.reminderButton = true;
+  }
  }
 
   ngOnInit(): void {

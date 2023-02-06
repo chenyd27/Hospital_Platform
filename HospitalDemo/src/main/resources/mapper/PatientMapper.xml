@@ -33,4 +33,11 @@
     <select id="getPatientInfo" resultType="Patient">
         select * from Patient where email = #{email};
     </select>
+
+    <update id="setReminderFinished" parameterType="int">
+        update Reminders set state = 1 where reminderId = #{reminderId};
+    </update>
+    <update id="setReminderOutdated" parameterType="int">
+        update Reminders as r set r.state = 2 where r.patientId = #{patientId} and (r.date &lt; (NOW() - interval r.deadline day));
+    </update>
 </mapper>

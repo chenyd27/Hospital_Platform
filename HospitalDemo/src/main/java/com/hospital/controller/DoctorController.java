@@ -124,6 +124,7 @@ public class DoctorController {
         if(reminder.getPriority() == 1){
             patient.setLowPriority(patient.getLowPriority() + 1);
         }else if(reminder.getPriority() == 2){
+            System.out.println(reminder.getPriority());
             patient.setMiddlePriority(patient.getMiddlePriority() + 1);
         }else{
             patient.setHighPriority(patient.getHighPriority() + 1);

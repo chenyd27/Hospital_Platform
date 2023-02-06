@@ -82,8 +82,8 @@ public class MysqlBinLogClient implements ApplicationRunner {
             // main method
             if(data instanceof WriteRowsEventData ){
                 // && PatientController.pt != null  && Integer.parseInt(Arrays.stream(((WriteRowsEventData) data).getRows().get(0)).toArray()[1].toString()) == PatientController.pt.getPatientId()
-                System.out.println(Integer.parseInt(Arrays.stream(((WriteRowsEventData) data).getRows().get(0)).toArray()[2].toString()));
-                webSocketService.sendMessage("hallo");
+                int index = Integer.parseInt(Arrays.stream(((WriteRowsEventData) data).getRows().get(0)).toArray()[2].toString());
+                webSocketService.sendMessage(index + "");
             }
             //表数据发生修改时触发
             if (data instanceof UpdateRowsEventData) {

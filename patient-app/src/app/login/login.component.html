@@ -1,0 +1,27 @@
+<p>
+    login works!
+</p>
+<ion-header></ion-header>
+
+<ion-content>
+    <ion-grid>
+        <ion-row>
+            <ion-col size="8" offset="2">
+                <ion-input placeholder="Please input your email" [clearInput]="true" [(ngModel)]="patient.email" style="border:1px solid gray;border-radius: 10px;"></ion-input>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="8" offset="2">
+                <ion-input placeholder="Please input your password" clearInput="true" type="password" [(ngModel)]="patient.password" style="border:1px solid gray;border-radius: 10px;"></ion-input>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="3" offset="3">
+                <ion-button (click)="loginPatient()">LOGIN</ion-button>
+            </ion-col>
+            <ion-col>
+                <ion-button (click)="cleanInput()" color="light">CLEAR</ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

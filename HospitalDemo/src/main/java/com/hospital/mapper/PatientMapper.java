@@ -14,5 +14,8 @@ public interface PatientMapper {
     public Patient loginPatient(@Param("email") String email, @Param("password") String password);
     public Patient getPatientInfo(@Param("email") String email);
     public List<Reminder> getReminderList(Patient patient);
-    public int setReminderFinished(Reminder reminder);
+    public int setReminderFinished(@Param("reminderId")int reminderId);
+
+    public int setReminderOutdated(@Param("patientId") int patientId);
+
 }

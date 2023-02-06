@@ -47,8 +47,12 @@ export class HistoryComponent implements OnInit {
         for(let i = 0;i < res.outdatedReminderList.length;i++){
           let date = new Date();
           let tmp = new Date(res.outdatedReminderList[i].date);
-          let lag = tmp.getDay() - date.getDay();
-          this.dateset[7-lag] += 1;
+          date.setHours(0,0,0,0);
+          tmp.setHours(0,0,0,0);
+          let lag = date.getTime() - tmp.getTime();
+          lag /= (3600 * 24 * 1000);
+          lag = Math.floor(lag);
+          this.dateset[lag] += 1;
         }
         this.barChartData = [{data: this.dateset, label: 'Times'}];
       })
@@ -69,11 +73,14 @@ export class HistoryComponent implements OnInit {
               this.patients = this.loginInfo.doctor.patientList;
               this.http.get(this.loginInfo.url + "doctor-outdated-reminder?patientId=" + this.patients[0].patientId).subscribe((res : any)=>{
                 for(let i = 0;i < res.outdatedReminderList.length;i++){
-                    let date = new Date();
-                    let tmp = new Date(res.outdatedReminderList[i].date);
-                    let lag = tmp.getDay() - date.getDay();
-                    console.log(lag);
-                    this.dateset[7-lag] += 1;
+                  let date = new Date();
+                  let tmp = new Date(res.outdatedReminderList[i].date);
+                  date.setHours(0,0,0,0);
+                  tmp.setHours(0,0,0,0);
+                  let lag = date.getTime() - tmp.getTime();
+                  lag /= (3600 * 24 * 1000);
+                  lag = Math.floor(lag);
+                  this.dateset[lag] += 1;
                 }
                 this.barChartData = [{data: this.dateset, label: 'Times'}];
               })

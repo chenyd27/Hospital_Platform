@@ -63,7 +63,10 @@ export class AddreminderComponent implements OnInit {
       }
       this.http.post(this.url + 'doctor-addreminder',this.reminder).subscribe((res:any)=>{
         if(res.flag == true){
-            this.router.navigateByUrl('');
+          localStorage.setItem('reminderButton','true');
+          localStorage.setItem('addButton','false');
+          localStorage.setItem('historyButton','false');
+          this.router.navigateByUrl('');
         }
       })
     }
