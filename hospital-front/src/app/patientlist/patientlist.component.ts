@@ -14,7 +14,9 @@ export class PatientlistComponent implements OnInit {
   constructor(private route : ActivatedRoute, private http: HttpClient, private loginInfo : LoginGuard) { }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((data:any)=>{
+    if(localStorage.getItem('flag') == 'false'){
+      console.log(1);
+    }else{
       let currentDoctor : any;
       let tmpDoctor: string | null = localStorage.getItem('doctor');
       if(typeof tmpDoctor === "string"){
@@ -31,8 +33,7 @@ export class PatientlistComponent implements OnInit {
             })
           }
       })
-      
-    })
+    }
   }
 
 }

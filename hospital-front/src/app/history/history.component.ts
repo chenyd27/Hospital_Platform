@@ -45,9 +45,10 @@ export class HistoryComponent implements OnInit {
       this.http.get(this.loginInfo.url + "doctor-outdated-reminder?patientId=" + tmpId).subscribe((res : any)=>{
         console.log(res);
         for(let i = 0;i < res.outdatedReminderList.length;i++){
-            let date = new Date();
-            let lag = new Date(date.getTime() - res.outdatedReminderList[i].date);
-            this.dateset[lag.getDay()] += 1;
+          let date = new Date();
+          let tmp = new Date(res.outdatedReminderList[i].date);
+          let lag = tmp.getDay() - date.getDay();
+          this.dateset[7-lag] += 1;
         }
         this.barChartData = [{data: this.dateset, label: 'Times'}];
       })
@@ -69,8 +70,10 @@ export class HistoryComponent implements OnInit {
               this.http.get(this.loginInfo.url + "doctor-outdated-reminder?patientId=" + this.patients[0].patientId).subscribe((res : any)=>{
                 for(let i = 0;i < res.outdatedReminderList.length;i++){
                     let date = new Date();
-                    let lag = new Date(date.getTime() - res.outdatedReminderList[i].date);
-                    this.dateset[lag.getDay()] += 1;
+                    let tmp = new Date(res.outdatedReminderList[i].date);
+                    let lag = tmp.getDay() - date.getDay();
+                    console.log(lag);
+                    this.dateset[7-lag] += 1;
                 }
                 this.barChartData = [{data: this.dateset, label: 'Times'}];
               })
@@ -78,7 +81,7 @@ export class HistoryComponent implements OnInit {
           })
         }
     })
-      for (let i = 6; i >= 0; i--) {
+      for (let i = 0; i < 7; i++) {
         const date = new Date();
         date.setDate(date.getDate() - i);
         this.barChartLabels.push(date.toLocaleDateString());

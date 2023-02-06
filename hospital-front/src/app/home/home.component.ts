@@ -55,7 +55,7 @@ export class HomeComponent implements OnInit {
  }
 
   ngOnInit(): void {
-    if(Boolean(localStorage.getItem('flag')) == false || localStorage.getItem('flag') == null){
+    if(Boolean(localStorage.getItem('flag')) == false || localStorage.getItem('flag') == null || localStorage.getItem('flag') == 'false'){
       this.router.navigateByUrl("/login");
     }
     if(localStorage.getItem('historyButton') === "true"){

@@ -12,7 +12,7 @@ public class WebConfig extends WebMvcConfigurationSupport {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // 允许的路径
-                .allowedOrigins("http://localhost:4200","null") // 请求来源
+                .allowedOrigins("http://localhost:4200","http://localhost:8100") // 请求来源
                 .allowedMethods("GET","POST","OPTION","DELETE","PUT") // 允许的请求方法
                 .allowCredentials(true) // 是否允许携带参数
                 .maxAge(3600); // 最大请求时间

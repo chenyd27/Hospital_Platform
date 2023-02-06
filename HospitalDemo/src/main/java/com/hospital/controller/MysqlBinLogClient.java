@@ -6,8 +6,10 @@ import com.github.shyiko.mysql.binlog.BinaryLogClient;
 import com.github.shyiko.mysql.binlog.event.*;
 import com.hospital.controller.PatientController;
 import com.hospital.mapper.PatientMapper;
+import com.hospital.mapper.WebSocketServer;
 import com.hospital.pojo.Patient;
 import com.hospital.pojo.Reminder;
+import com.hospital.service.WebSocketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -29,6 +31,9 @@ public class MysqlBinLogClient implements ApplicationRunner {
 
     @Autowired
     PatientMapper patientMapper;
+
+    @Autowired
+    WebSocketService webSocketService;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -75,8 +80,10 @@ public class MysqlBinLogClient implements ApplicationRunner {
                 System.out.println(tableMapEventData.getTable());
             }
             // main method
-            if(data instanceof WriteRowsEventData && PatientController.pt != null  && Integer.parseInt(Arrays.stream(((WriteRowsEventData) data).getRows().get(0)).toArray()[1].toString()) == PatientController.pt.getPatientId()){
-                getValidReminder();
+            if(data instanceof WriteRowsEventData ){
+                // && PatientController.pt != null  && Integer.parseInt(Arrays.stream(((WriteRowsEventData) data).getRows().get(0)).toArray()[1].toString()) == PatientController.pt.getPatientId()
+                System.out.println(Integer.parseInt(Arrays.stream(((WriteRowsEventData) data).getRows().get(0)).toArray()[2].toString()));
+                webSocketService.sendMessage("hallo");
             }
             //表数据发生修改时触发
             if (data instanceof UpdateRowsEventData) {
