@@ -1,0 +1,20 @@
+<ion-content>
+    <ion-card>
+        <ion-card-header>
+            <ion-card-subtitle class="ion-text-lowercase">{{patient.email}}</ion-card-subtitle>
+            <ion-card-title>{{patient.firstName}} {{patient.lastName}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-card-subtitle color="danger">High Priority: {{patient.highPriority}}</ion-card-subtitle>
+            <ion-card-subtitle color="warning">Middle Priority : {{patient.middlePriority}}</ion-card-subtitle>
+            <ion-card-subtitle color="success">Low Priority: {{patient.lowPriority}}</ion-card-subtitle>
+        </ion-card-content>
+    </ion-card>
+    <ion-grid>
+        <ion-row>
+            <ion-col offset="2.5">
+                <ion-button style="width: 200px;" (click)="logout()">Log Out</ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

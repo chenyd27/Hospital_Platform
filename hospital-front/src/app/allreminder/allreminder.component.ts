@@ -17,6 +17,7 @@ export class AllreminderComponent implements OnInit {
   ngOnInit(): void {
     localStorage.setItem('patientpage','false');
     localStorage.setItem('reminderpage','true');
+    localStorage.setItem('allreminder','2');
     this.route.queryParams.subscribe((data:any)=>{
       let currentDoctor : any;
       let tmpDoctor: string | null = localStorage.getItem('doctor');
@@ -31,6 +32,7 @@ export class AllreminderComponent implements OnInit {
                 localStorage.setItem('doctor',JSON.stringify(res.doctor));
                 this.doctor = res.doctor;
                 this.reminderList = res.doctor.reminderList;
+                console.log(this.reminderList);
               }
             })
           }

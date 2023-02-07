@@ -16,10 +16,10 @@ export class LoginComponent implements OnInit {
   }
   loginPatient():void{
     this.http.post(this.loginservice.url + "login-patient",this.patient).subscribe((res:any)=>{
-      console.log(res);
       if(res.flag == true){
         localStorage.setItem('flag','true');
         localStorage.setItem('patient',JSON.stringify(res.patient));
+        localStorage.setItem('homepage','true');
         this.router.navigateByUrl('home');
       }
     })
@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
   constructor(private router :Router,private route : ActivatedRoute,private http:HttpClient,private loginservice:LoginGuard) { }
 
   ngOnInit() {
+    localStorage.clear();
     localStorage.setItem('flag','false');
     localStorage.setItem('patient','');
   }

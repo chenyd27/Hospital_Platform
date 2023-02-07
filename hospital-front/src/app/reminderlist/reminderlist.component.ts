@@ -30,6 +30,11 @@ export class ReminderlistComponent implements OnInit,DoCheck{
   constructor(private route : ActivatedRoute, private router : Router, private http : HttpClient, private loginInfo: LoginGuard ) { }
 
   ngOnInit(): void {
+    if(localStorage.getItem('allreminder') == '1'){
+      this.changePatientList();
+    }else{
+      this.changeReminderList();
+    }
     localStorage.setItem('patientpage','true');
     localStorage.setItem('reminderpage','false');
   }

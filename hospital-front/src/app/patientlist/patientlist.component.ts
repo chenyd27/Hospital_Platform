@@ -16,6 +16,7 @@ export class PatientlistComponent implements OnInit {
   ngOnInit(): void {
     localStorage.setItem('patientpage','true');
     localStorage.setItem('reminderpage','false');
+    localStorage.setItem('allreminder','1');
     if(localStorage.getItem('flag') == 'false'){
       console.log(1);
     }else{

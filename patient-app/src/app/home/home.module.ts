@@ -16,6 +16,6 @@ import { DatePipe } from '../pipe/date.pipe';
     IonicModule,
     HomePageRoutingModule,
   ],
-  declarations: [HomePage,PriorityPipe,DatePipe]
+  declarations: [HomePage]
 })
 export class HomePageModule {}

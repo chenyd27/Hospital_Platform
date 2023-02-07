@@ -18,7 +18,7 @@
     </select>
 
     <select id="getValidReminderList" resultType="Reminder">
-        SELECT r.*, p.* from Reminders as r, Doctor as d, Patient as p
+        SELECT r.*, p.firstName as patientFirstName,p.lastName as patientLastName, p.email as patientEmail, d.email as doctorEmail,d.firstName as doctorFirstName, d.lastName as doctorLastName from Reminders as r, Doctor as d, Patient as p
         where d.doctorId = #{doctorId} and p.patientId = r.patientId and r.state = 0
         Order by r.priority DESC;
     </select>

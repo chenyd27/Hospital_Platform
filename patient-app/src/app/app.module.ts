@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouteReuseStrategy } from '@angular/router';
+import { RouteReuseStrategy, RouterModule } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
@@ -11,11 +11,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
 import { PriorityPipe } from './pipe/priority.pipe';
+import { InfoComponent } from './info/info.component';
+import { ReminderlistComponent } from './reminderlist/reminderlist.component';
+import { DatePipe } from './pipe/date.pipe';
+import { HomePageRoutingModule } from './home/home-routing.module';
 
 
 @NgModule({
-  declarations: [AppComponent,LoginComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule,FormsModule],
+  declarations: [AppComponent,LoginComponent,InfoComponent,ReminderlistComponent,DatePipe,PriorityPipe],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule,FormsModule,HomePageRoutingModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },StompService],
   bootstrap: [AppComponent],
 })

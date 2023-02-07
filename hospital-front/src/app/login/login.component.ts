@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+      localStorage.clear();
       localStorage.setItem('doctor',"");
       localStorage.setItem('flag',"false");
       localStorage.setItem('reminderButton','true');

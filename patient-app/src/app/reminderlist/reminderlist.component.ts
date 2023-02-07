@@ -1,18 +1,17 @@
-import { Component, DoCheck, OnInit } from '@angular/core';
-import { StompService } from '../service/stomp.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { LoginGuard } from '../service/userinfo.service';
+import { StompService } from '../service/stomp.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  selector: 'app-reminderlist',
+  templateUrl: './reminderlist.component.html',
+  styleUrls: ['./reminderlist.component.scss'],
 })
-export class HomePage implements OnInit {
+export class ReminderlistComponent implements OnInit {
 
   patient:any;
-  index:boolean = true;
   constructor(private loginService : LoginGuard,private stomp : StompService,private router :Router,private route : ActivatedRoute,private http:HttpClient) {}
   
   renewReminderList():void{
@@ -31,25 +30,13 @@ export class HomePage implements OnInit {
       })
   }
 
-  jumptoReminder():void{
-    this.router.navigateByUrl('');
-    this.index = true;
-  }
-
-  jumptoInfo():void{
-    this.router.navigateByUrl('home/info');
-    this.index = false;
-  }  
+  
 
   ngOnInit(): void {
       if(localStorage.getItem('flag') == 'false' || localStorage.getItem('flag') == null){
           this.router.navigateByUrl("login");
       }else{
-        if(localStorage.getItem('homepage') == 'false'){
-          this.index = false;
-        }else{
-          this.index = true;
-        }
+        localStorage.setItem('homepage','true');
         let tmp = localStorage.getItem('patient');
         if(tmp != null)this.patient = JSON.parse(tmp);
         this.renewReminderList();
