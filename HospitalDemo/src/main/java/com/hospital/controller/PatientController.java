@@ -74,16 +74,42 @@ public class PatientController {
     }
     @RequestMapping("/patient-finished")
     public Map<String,Object> updateFinished(@RequestBody Map<String,Object> map){
+        Patient patient = patientMapper.getPatientbyId((int) map.get("patientId"));
         int res = patientMapper.setReminderFinished((int)map.get("reminderId"));
+        int priority = (int) map.get("priority");
+        if(priority == 1) patient.setLowPriority(patient.getLowPriority() - 1);
+        if(priority == 2) patient.setMiddlePriority(patient.getMiddlePriority() - 1);
+        if(priority == 3) patient.setHighPriority(patient.getHighPriority() - 1);
+        patientMapper.updatePatient(patient);
         Map<String,Object> objectMap = new HashMap<>();
         objectMap.put("res",res);
         return objectMap;
     }
     @RequestMapping("/patient-outdated")
-    public Map<String,Object> updateOutdated(@RequestBody Map<String,Object> map){
-        int res = patientMapper.setReminderOutdated((int) map.get("patientId"));
-        Map<String,Object> hashmap = new HashMap<>();
-        hashmap.put("res",res);
+    public Map<String,Object> updateOutdated(@RequestBody Map<String,Object> map) {
+        Patient patient = patientMapper.getPatientbyId((int) map.get("patientId"));
+        List<Reminder> reminderList = patientMapper.getReminderList(patient);
+        Date today = Calendar.getInstance().getTime();
+        for (Reminder reminder : reminderList) {
+            Date date = reminder.getDate();
+            Calendar c = Calendar.getInstance();
+            c.setTime(date);
+            c.add(Calendar.HOUR_OF_DAY, reminder.getDeadline());
+            Date newdate = c.getTime();
+            if (newdate.getTime() < today.getTime()) {
+                patientMapper.setReminderOutdated(reminder);
+                if (reminder.getPriority() == 1) {
+                    patient.setLowPriority(patient.getLowPriority() - 1);
+                } else if (reminder.getPriority() == 2) {
+                    patient.setMiddlePriority(patient.getMiddlePriority() - 1);
+                } else {
+                    patient.setHighPriority(patient.getHighPriority() - 1);
+                }
+                patientMapper.updatePatient(patient);
+            }
+        }
+        Map<String, Object> hashmap = new HashMap<>();
+        hashmap.put("reminderList", reminderList);
         return hashmap;
     }
 }

@@ -24,11 +24,13 @@ export class LoginComponent implements OnInit {
   url : string = "http://localhost:9000/";
   jump():void{
     this.http.post(this.url + "doctor-login-origin",this.doctor).subscribe((res:any)=>{
+      console.log(res);
       if(res.flag == true){
         this.loginInfo.setDoctor(res.doctor,res.flag);
         this.router.navigate(['/home']);
         localStorage.setItem('doctor',JSON.stringify(res.doctor));
         localStorage.setItem('flag',res.flag);
+        console.log(localStorage);
         /**
          * let navigationExtras: NavigationExtras = {
           queryParams:{'email':res.doctor.email,'password':res.doctor.password}

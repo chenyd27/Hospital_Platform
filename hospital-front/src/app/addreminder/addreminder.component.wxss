@@ -79,3 +79,8 @@
 .show {
   display: none;
 }
+.title {
+  font-size: 25px;
+  font-weight: lighter;
+  color: #13348e;
+}

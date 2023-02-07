@@ -44,12 +44,13 @@ public class DoctorController {
 
     @RequestMapping("/doctor-info")
     public Map<String, Object> getInfo(@RequestBody Map<String,Object> resmap){
-        Doctor doctor = doctorMapper.getDoctorInfo((String) resmap.get("email"));
+        Doctor doctor = doctorMapper.loginDoctor((String) resmap.get("email"),(String) resmap.get("password"));
         Map<String, Object> map = new HashMap<>();
         boolean flag = false;
         if(doctor != null){
             flag = true;
             List<Patient> patients = doctorMapper.getPatientList(doctor);
+            List<Reminder> reminders = doctorMapper.getValidReminderList(doctor);
             patients.sort((a,b)->{
                 if(a.getHighPriority() != b.getHighPriority()) return b.getHighPriority() - a.getHighPriority();
                 else if(a.getMiddlePriority() != b.getMiddlePriority()) return b.getMiddlePriority() - a.getMiddlePriority();
@@ -64,6 +65,7 @@ public class DoctorController {
              }
              */
             doctor.setPatientList(patients);
+            doctor.setReminderList(reminders);
             map.put("doctor", doctor);
         }
         map.put("flag",flag);

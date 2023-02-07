@@ -13,9 +13,13 @@ import java.util.List;
 public interface PatientMapper {
     public Patient loginPatient(@Param("email") String email, @Param("password") String password);
     public Patient getPatientInfo(@Param("email") String email);
+
+    public Patient getPatientbyId(@Param("patientId") int patientId);
     public List<Reminder> getReminderList(Patient patient);
     public int setReminderFinished(@Param("reminderId")int reminderId);
 
-    public int setReminderOutdated(@Param("patientId") int patientId);
+    public int setReminderOutdated(Reminder reminder);
+
+    public int updatePatient(Patient patient);
 
 }

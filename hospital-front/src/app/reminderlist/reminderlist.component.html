@@ -1,4 +1,4 @@
-<p>reminderlist works!</p>
+<p class="title">Reminders > {{this.subtitle}}</p>
 <div class="selector">
     <div [ngClass]="{'shift' :index == 0, 'hidden' : index != 0}" routerLink="" (click)="changePatientList()">Patient-List</div>
     <div [ngClass]="{'shift' :index == 1, 'hidden' : index != 1}" routerLink="allreminder" (click)="changeReminderList()">Reminder-List</div>

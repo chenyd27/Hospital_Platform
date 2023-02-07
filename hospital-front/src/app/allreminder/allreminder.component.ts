@@ -15,6 +15,8 @@ export class AllreminderComponent implements OnInit {
   constructor(private http: HttpClient, private route : ActivatedRoute, private router : Router, private loginInfo : LoginGuard) { }
 
   ngOnInit(): void {
+    localStorage.setItem('patientpage','false');
+    localStorage.setItem('reminderpage','true');
     this.route.queryParams.subscribe((data:any)=>{
       let currentDoctor : any;
       let tmpDoctor: string | null = localStorage.getItem('doctor');

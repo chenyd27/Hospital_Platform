@@ -37,7 +37,17 @@
     <update id="setReminderFinished" parameterType="int">
         update Reminders set state = 1 where reminderId = #{reminderId};
     </update>
+
     <update id="setReminderOutdated" parameterType="int">
-        update Reminders as r set r.state = 2 where r.patientId = #{patientId} and (r.date &lt; (NOW() - interval r.deadline day));
+        update Reminders as r set r.state = 2 where r.reminderId = #{reminderId};
+    </update>
+
+    <select id="getPatientbyId" resultType="Patient" parameterType="int">
+        select * from Patient where patientId = #{patientId};
+    </select>
+
+    <update id="updatePatient" parameterType="Patient">
+        update Patient set highpriority = #{highPriority}, middlepriority = #{middlePriority}, lowpriority = #{lowPriority}
+        where patientId = #{patientId};
     </update>
 </mapper>
