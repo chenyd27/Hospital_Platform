@@ -6,7 +6,6 @@ import com.github.shyiko.mysql.binlog.BinaryLogClient;
 import com.github.shyiko.mysql.binlog.event.*;
 import com.hospital.controller.PatientController;
 import com.hospital.mapper.PatientMapper;
-import com.hospital.mapper.WebSocketServer;
 import com.hospital.pojo.Patient;
 import com.hospital.pojo.Reminder;
 import com.hospital.service.WebSocketService;
