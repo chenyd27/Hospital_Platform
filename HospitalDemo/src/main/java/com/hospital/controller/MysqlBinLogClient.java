@@ -64,21 +64,6 @@ public class MysqlBinLogClient implements ApplicationRunner {
         client.registerEventListener(event -> {
             EventData data = event.getData();
             TableMapEventData tableMapEventData = new TableMapEventData();
-            if (data instanceof TableMapEventData) {
-                //只要连接的MySQL发生的增删改的操作，则都会进入这里，无论哪个数据库
-
-                tableMapEventData = (TableMapEventData) data;
-
-                //可以通过转成TableMapEventData类实例的tableMapEventData来获取当前发生变更的数据库
-                System.out.println("发生变更的数据库："+tableMapEventData.getDatabase());
-
-                System.out.print("TableID:");
-                //表ID
-                System.out.println(tableMapEventData.getTableId());
-                System.out.print("TableName:");
-                //表名字
-                System.out.println(tableMapEventData.getTable());
-            }
             // main method
             if(data instanceof WriteRowsEventData ){
                 // && PatientController.pt != null  && Integer.parseInt(Arrays.stream(((WriteRowsEventData) data).getRows().get(0)).toArray()[1].toString()) == PatientController.pt.getPatientId()
@@ -86,19 +71,21 @@ public class MysqlBinLogClient implements ApplicationRunner {
                 webSocketService.sendMessage(index + "");
             }
             //表数据发生修改时触发
-            if (data instanceof UpdateRowsEventData) {
-                System.out.println("Update:");
-                System.out.println(data.toString());
-                //表数据发生插入时触发
-            } else if (data instanceof WriteRowsEventData) {
-                WriteRowsEventData writeRowsEventData = (WriteRowsEventData)data;
-                System.out.println("Insert:");
-                System.out.println(data.toString());
-                //表数据发生删除后触发
-            } else if (data instanceof DeleteRowsEventData) {
-                System.out.println("Delete:");
-                System.out.println(data.toString());
-            }
+            /**
+             * if (data instanceof UpdateRowsEventData) {
+             *                 System.out.println("Update:");
+             *                 System.out.println(data.toString());
+             *                 //表数据发生插入时触发
+             *             } else if (data instanceof WriteRowsEventData) {
+             *                 WriteRowsEventData writeRowsEventData = (WriteRowsEventData)data;
+             *                 System.out.println("Insert:");
+             *                 System.out.println(data.toString());
+             *                 //表数据发生删除后触发
+             *             } else if (data instanceof DeleteRowsEventData) {
+             *                 System.out.println("Delete:");
+             *                 System.out.println(data.toString());
+             *             }
+             * **/
         });
         try {
             client.connect();
