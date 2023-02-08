@@ -23,7 +23,8 @@ export class InfoComponent implements OnInit {
   }
 
   logout():void{
-      this.router.navigateByUrl('login');
+    localStorage.setItem('homepage','true');
+    this.router.navigateByUrl('login');
   }
 
   ngOnInit() {
