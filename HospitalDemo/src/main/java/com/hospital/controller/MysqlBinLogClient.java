@@ -51,7 +51,7 @@ public class MysqlBinLogClient implements ApplicationRunner {
         log.info("监控BinLog服务已启动");
 
         //自己MySQL的信息。host，port，username，password
-        BinaryLogClient client = new BinaryLogClient("localhost", 3306, "root", "ccbysq520");
+        BinaryLogClient client = new BinaryLogClient("34.121.44.223", 3306, "cyd", "ccbysq520");
         /**因为binlog不是以数据库为单位划分的，所以监控binglog不是监控的单个的数据库，而是整个当前所设置连接的MySQL，
          *其中任何一个库发生数据增删改，这里都能检测到，
          *所以不用设置所监控的数据库的名字(我也不知道怎么设置，没发现有包含这个形参的构造函数)
