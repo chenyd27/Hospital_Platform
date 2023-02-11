@@ -17,7 +17,7 @@ export class PatientlistComponent implements OnInit {
     localStorage.setItem('patientpage','true');
     localStorage.setItem('reminderpage','false');
     localStorage.setItem('allreminder','1');
-    if(localStorage.getItem('flag') == 'false'){
+    if(localStorage.getItem('flag') == 'false' || localStorage.getItem('flag') == null){
       console.log(1);
     }else{
       let currentDoctor : any;

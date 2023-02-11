@@ -75,19 +75,20 @@ export class HomeComponent implements OnInit,DoCheck {
   ngOnInit(): void {
     if(Boolean(localStorage.getItem('flag')) == false || localStorage.getItem('flag') == null || localStorage.getItem('flag') == 'false'){
       this.router.navigateByUrl("/login");
-    }
-    if(localStorage.getItem('historyButton') === "true"){
-      this.historyButton = true;
-      this.addButton = false;
-      this.reminderButton = false;
-    }else if(localStorage.getItem('addButton') === "true"){
-      this.historyButton = false;
-      this.addButton = true;
-      this.reminderButton = false;
-    } else{
-      this.historyButton = false;
-      this.addButton = false;
-      this.reminderButton = true;
+    }else{
+      if(localStorage.getItem('historyButton') === "true"){
+        this.historyButton = true;
+        this.addButton = false;
+        this.reminderButton = false;
+      }else if(localStorage.getItem('addButton') === "true"){
+        this.historyButton = false;
+        this.addButton = true;
+        this.reminderButton = false;
+      } else{
+        this.historyButton = false;
+        this.addButton = false;
+        this.reminderButton = true;
+      }
     }
     /**
      * this.route.queryParams.subscribe((data:any)=>{
@@ -104,7 +105,6 @@ export class HomeComponent implements OnInit,DoCheck {
     })
      */
   }
-  }
-
+}
 
 
