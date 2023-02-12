@@ -10,4 +10,4 @@ mybatis:
   type-aliases-package: com.hospital.pojo
 
 server:
-  port: ${PORT:9000}
+  port: ${PORT:8080}

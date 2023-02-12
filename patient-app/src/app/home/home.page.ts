@@ -40,15 +40,7 @@ export class HomePage implements OnInit {
     this.router.navigateByUrl('home/info');
     this.index = false;
   }  
-  ngDoCheck(): void {
-    //Called every time that the input properties of a component or a directive are checked. Use it to extend change detection by performing a custom check.
-    //Add 'implements DoCheck' to the class.
-    if(localStorage.getItem('homepage') == 'false'){
-      this.index = false;
-    }else{
-      this.index = true;
-    }
-  }
+  
   ngOnInit(): void {
       if(localStorage.getItem('flag') == 'false' || localStorage.getItem('flag') == null){
           this.router.navigateByUrl("login");

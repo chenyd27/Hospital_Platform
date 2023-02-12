@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
     localStorage.clear();
     localStorage.setItem('flag','false');
     localStorage.setItem('patient','');
+    localStorage.setItem('homepage','true');
   }
 
 }
