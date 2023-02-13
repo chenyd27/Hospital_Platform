@@ -33,7 +33,7 @@ export class HistoryComponent implements OnInit {
   public dateset : number[] = [0,0,0,0,0,0,0];
   
   public barChartData: ChartDataSets[] = [
-    { data: this.dateset, label: 'PHP' },
+    { data: this.dateset, label: 'Unfinished Times' },
   ];  
 
   constructor(private http : HttpClient, private route : ActivatedRoute, private router : Router, private loginInfo : LoginGuard) {
@@ -54,7 +54,7 @@ export class HistoryComponent implements OnInit {
           lag = Math.floor(lag);
           this.dateset[lag] += 1;
         }
-        this.barChartData = [{data: this.dateset, label: 'Times'}];
+        this.barChartData = [{data: this.dateset, label: 'Unfinished Times'}];
       })
   }
 
@@ -82,7 +82,7 @@ export class HistoryComponent implements OnInit {
                   lag = Math.floor(lag);
                   this.dateset[lag] += 1;
                 }
-                this.barChartData = [{data: this.dateset, label: 'Times'}];
+                this.barChartData = [{data: this.dateset, label: 'Unfinished Times'}];
               })
             }
           })

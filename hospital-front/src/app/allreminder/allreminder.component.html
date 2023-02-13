@@ -8,6 +8,7 @@
             <th>Starting-Date</th>
             <th>Deadline</th>
         </tr>
+        <div *ngIf="this.reminderList.length == 0" style="margin-top: 10px;font-weight: bolder;margin-bottom: 10px;">No reminder right now!</div>
         <tr *ngFor="let item of reminderList;">
             <td class="content">{{item.content}}</td>
             <td class="name">{{item.patientFirstName}} {{item.patientLastName}}</td>

@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./addreminder.component.less']
 })
 export class AddreminderComponent implements OnInit {
-  url : string = "http://localhost:9000/";
+  url : string = "http://44.210.137.103:8080/";
   doctor:any = {};
   selectPatient:string = "";
   patientId : string = "";
@@ -66,6 +66,7 @@ export class AddreminderComponent implements OnInit {
           localStorage.setItem('reminderButton','true');
           localStorage.setItem('addButton','false');
           localStorage.setItem('historyButton','false');
+          localStorage.setItem('allreminder','1');
           this.router.navigateByUrl('');
         }
       })

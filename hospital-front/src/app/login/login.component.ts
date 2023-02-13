@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('reminderButton','true');
       localStorage.setItem('addButton','false');
       localStorage.setItem('historyButton','false');
-
+      localStorage.setItem('allreminder','1');
   }
 
 }
