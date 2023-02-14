@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import SockJS from 'sockjs-client';
+import * as SockJS from 'sockjs-client';
 import { Stomp, StompConfig } from '@stomp/stompjs';
 
 @Injectable({
@@ -14,7 +14,9 @@ export class StompService {
         timeout: 10000, // 设置超时时间为 10 秒
       };
     socket = ()=>{
-        return new SockJS('http://44.211.141.255:8080/sba-websocket',undefined,this.options);
+        return new SockJS('http://44.211.141.255:8080/sba-websocket',undefined,{
+            transports: ['v12.stomp','v11.stomp','xhr-streaming','websocket']
+          });
     };
     stompClient = Stomp.over(this.socket);
     
@@ -47,7 +49,9 @@ export class StompService {
 
             // Once done empty the queue
             this.topicQueue = [];
-        });
+        }),(error:any)=>{
+            console.log(error);
+        };
     }
 
     private subscribeToTopic(topic: string, callback?: any): void {
