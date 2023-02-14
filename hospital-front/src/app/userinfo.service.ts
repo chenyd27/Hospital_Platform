@@ -11,7 +11,7 @@ export class LoginGuard{
         password : ""
     }
     flag : boolean = false;
-    url : string = "http://44.210.137.103:8080/";
+    url : string = "http://44.211.141.255:8080/";
     constructor(private http:HttpClient){}
 
     setDoctor(doctor : any, flag : any){

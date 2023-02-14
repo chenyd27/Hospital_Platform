@@ -25,17 +25,14 @@ export class AllreminderComponent implements OnInit {
         currentDoctor = JSON.parse(tmpDoctor);
       }
       this.http.post(this.loginInfo.url + "doctor-outdated",currentDoctor).subscribe((res:any)=>{
-          if(res.outdated == true){
             this.http.post(this.loginInfo.url + "doctor-info",currentDoctor).subscribe((res:any)=>{
               if(res.flag == true){
                 this.loginInfo.setDoctor(res.doctor,res.flag);
                 localStorage.setItem('doctor',JSON.stringify(res.doctor));
                 this.doctor = res.doctor;
                 this.reminderList = res.doctor.reminderList;
-                console.log(this.reminderList);
               }
             })
-          }
       })
       
     })

@@ -22,8 +22,10 @@ export class ReminderlistComponent implements OnInit,DoCheck{
   ngDoCheck(): void {
       if(localStorage.getItem('patientpage') ==='true'){
         this.subtitle = "Patient-List";
+        this.changePatientList();
       }else{
         this.subtitle = "Reminder-List";
+        this.changeReminderList();
       }
   }
 

@@ -32,7 +32,7 @@ export class HomePage implements OnInit {
   }
 
   jumptoReminder():void{
-    this.router.navigateByUrl('');
+    this.router.navigateByUrl('home/reminders');
     this.index = true;
     localStorage.setItem('homepage','true');
   }

@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   password: string = "";
   router : Router;
   http : HttpClient;
-  url : string = "http://44.210.137.103:8080/";
+  url : string = "http://44.211.141.255:8080/";
   jump():void{
     this.http.post(this.url + "doctor-login-origin",this.doctor).subscribe((res:any)=>{
       console.log(res);

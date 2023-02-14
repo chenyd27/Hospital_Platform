@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./addreminder.component.less']
 })
 export class AddreminderComponent implements OnInit {
-  url : string = "http://44.210.137.103:8080/";
+  url : string = "http://44.211.141.255:8080/";
   doctor:any = {};
   selectPatient:string = "";
   patientId : string = "";

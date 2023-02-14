@@ -27,7 +27,9 @@ export class InfoComponent implements OnInit {
     this.router.navigateByUrl('login');
   }
 
+
   ngOnInit() {
+    console.log("c");
     let tmp = localStorage.getItem('patient');
     if(tmp != null)this.patient = JSON.parse(tmp);
     this.renewReminderList();

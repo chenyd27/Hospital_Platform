@@ -1,5 +1,8 @@
 {
   "name": "patient-app",
-  "integrations": {},
+  "integrations": {
+    "cordova": {},
+    "capacitor": {}
+  },
   "type": "angular"
 }

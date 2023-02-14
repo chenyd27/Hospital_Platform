@@ -16,12 +16,11 @@ export class LoginComponent implements OnInit {
   }
   loginPatient():void{
     this.http.post(this.loginservice.url + "login-patient",this.patient).subscribe((res:any)=>{
-      if(res.flag == true){
-        localStorage.setItem('flag','true');
-        localStorage.setItem('patient',JSON.stringify(res.patient));
-        localStorage.setItem('homepage','true');
-        this.router.navigateByUrl('home');
-      }
+      console.log('aft');
+      localStorage.setItem('flag','true');
+      localStorage.setItem('patient',JSON.stringify(res.patient));
+      localStorage.setItem('homepage','true');
+      this.router.navigateByUrl('home');
     })
   }
 

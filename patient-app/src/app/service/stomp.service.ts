@@ -10,7 +10,10 @@ export class StompService {
     private connecting: boolean = false;
     private topicQueue: any[] = [];
 
-    socket = new SockJS('http://44.210.137.103:8080/sba-websocket');
+    options = {
+        timeout: 10000, // 设置超时时间为 10 秒
+      };
+    socket = new SockJS('http://44.211.141.255:8080/sba-websocket',undefined,this.options);
     stompClient = Stomp.over(this.socket);
 
     subscribe(topic: string, callback?: any): void {

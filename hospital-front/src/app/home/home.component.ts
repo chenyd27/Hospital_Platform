@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit,DoCheck {
   router : Router;
   route : ActivatedRoute;
   http:HttpClient;
-  url : string = "http://44.210.137.103:8080/";
+  url : string = "http://44.211.141.255:8080/";
   addButton : boolean = false;
   reminderButton : boolean = true;
   historyButton : boolean = false;

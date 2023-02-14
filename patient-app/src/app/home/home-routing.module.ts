@@ -14,6 +14,10 @@ const routes: Routes = [
         component:InfoComponent
       },{
         path:'',
+        redirectTo:'reminders',
+        pathMatch:'full'
+      },{
+        path:'reminders',
         component:ReminderlistComponent
       }
     ]
