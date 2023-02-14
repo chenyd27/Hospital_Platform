@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--User 配置文件-->
+<!--namespace = 绑定一个对应的mapper / dao 接口
+    实现接口
+-->
+
+<mapper namespace="com.hospital.mapper.DoctorMapper">
+
+    <select id="loginDoctor" resultType="Doctor">
+        select  * from Doctor where email = #{email} and password = #{password} and state = 0;
+    </select>
+
+    <select id="getPatientList" resultType="Patient">
+        select DISTINCT p.* from Doctor as d, Patient as p, Relationship as R where R.doctorId = #{doctorId} and p.state = 0;
+    </select>
+
+    <select id="getValidReminderList" resultType="Reminder">
+        SELECT r.*, p.firstName as patientFirstName,p.lastName as patientLastName, p.email as patientEmail, d.email as doctorEmail,d.firstName as doctorFirstName, d.lastName as doctorLastName from Reminders as r, Doctor as d, Patient as p
+        where d.doctorId = #{doctorId} and p.patientId = r.patientId and r.state = 0
+        Order by r.priority DESC;
+    </select>
+
+    <resultMap id="reminderMap" type="Reminder">
+        <id property="reminderId" column="reminderId"/>
+        <result property="content" column="content"/>
+        <result property="priority" column="priority"/>
+        <result property="state" column="state"/>
+        <result property="patientId" column="patientId"/>
+        <result property="deadline" column="deadline"/>
+        <result property="doctorFirstName" column="firstName"/>
+        <result property="doctorLastName" column="lastName"/>
+        <result property="doctorEmail" column="email"/>
+        <result property="patientFirstName" column="pfname"/>
+        <result property="patientLastName" column="plname"/>
+        <result property="patientEmail" column="pemail"/>
+    </resultMap>
+    <select id="getPastReminderList" resultMap="reminderMap" parameterType="map">
+        select r.*,d.*, p.firstName as pfname, p.lastName as plname, p.email as pemail  from Reminders as r, Patient as p, Doctor as d
+        where r.doctorId = #{doctorId} and d.doctorId = r.doctorId and p.patientId = r.patientId and r.date >= DATE_SUB(#{today},INTERVAL #{hours} HOUR);
+    </select>
+
+    <resultMap id="doctorMap" type="Doctor">
+        <id column="email" property="email"/>
+        <result column="password" property="password"/>
+        <result column="firstName" property="firstName"/>
+        <result column="lastName" property="lastName"/>
+        <result column="doctorId" property="doctorId"/>
+        <collection property="reminderList" ofType="Reminder">
+            <id property="reminderId" column="reminderId"/>
+            <result property="content" column="content"/>
+            <result property="priority" column="priority"/>
+            <result property="state" column="state"/>
+            <result property="patientId" column="patientId"/>
+            <result property="date" column="date"/>
+            <result property="deadline" column="deadline"/>
+            <result property="doctorFirstName" column="firstName"/>
+            <result property="doctorLastName" column="lastName"/>
+            <result property="doctorEmail" column="email"/>
+            <result property="patientFirstName" column="pfname"/>
+            <result property="patientLastName" column="plname"/>
+            <result property="patientEmail" column="pemail"/>
+        </collection>
+    </resultMap>
+    <select id="getDoctorInfo" resultMap="doctorMap">
+        select d.*, r.*, p.firstName as pfname, p.lastName as plname, p.email as pemail, p.highpriority as phigh,p.middlepriority as pmiddle,p.lowpriority as plow from Doctor as d, Reminders as r, Patient as p
+        where d.email = #{email} and d.doctorId = r.doctorId and p.patientId = r.patientId and r.state = 0;
+    </select>
+
+    <insert id="addPatient" parameterType="map">
+        insert into Relationship (patientId,doctorId) values (#{patientId}, #{doctorId});
+    </insert>
+
+    <delete id="deletePatient" parameterType="map">
+        delete from Relationship where patientId = #{patientId} and doctorId = #{doctorId};
+    </delete>
+
+    <update id="updatePatient" parameterType="Patient">
+        update Patient set highpriority = #{highPriority}, middlepriority = #{middlePriority}, lowpriority = #{lowPriority}
+        where patientId = #{patientId};
+    </update>
+
+    <select id="getSinglePatient" resultType="Patient">
+        select * from Patient where email = #{email};
+    </select>
+    <select id="getSinglePatientById" resultType="Patient">
+        select * from Patient where patientId = #{patientId};
+    </select>
+
+    <insert id="addReminder" parameterType="Reminder">
+        insert into Reminders (patientId, doctorId, content, date, deadline, priority, state)
+        values (#{patientId},#{doctorId},#{content},#{date},#{deadline},#{priority},#{state});
+    </insert>
+
+    <select id="getSingleReminder" resultType="Reminder">
+        select * from Reminders where reminderId = #{reminderId};
+    </select>
+
+
+    <update id="setReminderFinished" parameterType="Reminder">
+        update Reminders set state = 1 where reminderId = #{reminderId};
+    </update>
+
+    <update id="setReminderOutdated" parameterType="Reminder">
+        update Reminders set state = 2 where reminderId = #{reminderId};
+    </update>
+
+    <update id="updateReminder" parameterType="Reminder">
+        update Reminders set content = #{content} where reminderId = #{reminderId};
+    </update>
+    
+    <select id="countHighPriority" parameterType="Patient" resultType="int">
+        SELECT COUNT(reminderId) FROM Reminders WHERE priority = 3 and patientId = #{patientId} and state = 0;
+    </select>
+    <select id="countMiddlePriority" parameterType="Patient" resultType="int">
+        SELECT COUNT(reminderId) FROM Reminders WHERE priority = 2 and patientId = #{patientId} and state = 0;
+    </select>
+    <select id="countLowPriority" parameterType="Patient" resultType="int">
+        SELECT COUNT(reminderId) FROM Reminders WHERE priority = 1 and patientId = #{patientId} and state = 0;
+    </select>
+
+    <select id="getReminderOutdatedBySinglePatient" parameterType="int" resultType="Reminder">
+        select * from Reminders as r where r.patientId = #{patientId} and r.state = 2 and (r.date between (NOW() - interval 7 day) and NOW()) ;
+    </select>
+</mapper>
