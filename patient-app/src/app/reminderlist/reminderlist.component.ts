@@ -13,12 +13,10 @@ import { NewStompService } from '../service/newstomp.service';
 export class ReminderlistComponent implements OnInit {
 
   patient:any;
-  index:any;
   reminderList:any;
   constructor(private loginService : LoginGuard,private newstomp : NewStompService,private stomp : StompService,private router :Router,private route : ActivatedRoute,private http:HttpClient) {}
   
   renewReminderList():void{
-    this.index = this.patient;
     this.http.post(this.loginService.url + 'patient-outdated',this.patient).subscribe((res:any)=>{
       this.http.post(this.loginService.url + "patient-reminder",this.patient).subscribe((res:any)=>{
         this.patient.reminderList = res.reminderList;
