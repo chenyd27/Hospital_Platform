@@ -28,6 +28,7 @@
         "@stomp/stompjs": "^7.0.0",
         "capacitor": "^0.5.5",
         "cordova-android": "10.1.2",
+        "ionic-angular": "^3.9.10",
         "ionicons": "^6.0.3",
         "net": "^1.0.2",
         "ngx-stomp": "^1.2.1",

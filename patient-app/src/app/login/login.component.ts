@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { LoginGuard } from '../service/userinfo.service';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -30,11 +31,13 @@ export class LoginComponent implements OnInit {
   }
   constructor(private router :Router,private route : ActivatedRoute,private http:HttpClient,private loginservice:LoginGuard) { }
 
+
   ngOnInit() {
     localStorage.clear();
     localStorage.setItem('flag','false');
     localStorage.setItem('patient','');
     localStorage.setItem('homepage','true');
+    console.log(localStorage);
   }
 
 }

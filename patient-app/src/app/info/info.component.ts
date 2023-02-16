@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { LoginGuard } from '../service/userinfo.service';
 import { Router } from '@angular/router';
 import { StompService } from '../service/stomp.service';
+import { RouteReuseStrategy } from '@angular/router';
+
 
 @Component({
   selector: 'app-info',
@@ -11,7 +13,7 @@ import { StompService } from '../service/stomp.service';
 })
 export class InfoComponent implements OnInit {
   patient:any;
-  constructor(private http : HttpClient, private loginService : LoginGuard,private router : Router,private stomp : StompService) { }
+  constructor(private routeReuseStrategy: RouteReuseStrategy,private http : HttpClient, private loginService : LoginGuard,private router : Router,private stomp : StompService) { }
   
   renewReminderList():void{
     this.http.post(this.loginService.url + 'patient-outdated',this.patient).subscribe((res:any)=>{
@@ -24,6 +26,10 @@ export class InfoComponent implements OnInit {
   }
 
   logout():void{
+    localStorage.clear();
+    localStorage.setItem('flag','false');
+    localStorage.setItem('patient','');
+    localStorage.setItem('homepage','true');
     this.router.navigateByUrl('login');
   }
 
